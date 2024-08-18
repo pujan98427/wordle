@@ -1,0 +1,81 @@
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-[#121213] text-white font-normal;
+    font-family: "Inter", "sans-serif";
+
+}
+
+body,
+html {
+    height: 100%;
+}
+
+.row.invalid .tile,
+.tile.invalid {
+    color: #ff3f3f;
+    text-shadow: 0 0 12px rgba(246, 38, 38, 0.42);
+}
+
+
+output:empty {
+    display: none;
+}
+
+
+.key:active {
+    background: var(--absent-color);
+}
+
+.tile.correct,
+.key.correct {
+    @apply bg-green-500 border-green-500;
+}
+
+.tile.present,
+.key.present {
+    @apply bg-yellow-500 border-yellow-500;
+}
+
+.tile.absent,
+.key.absent {
+    @apply bg-gray-500 border-gray-500;
+}
+
+button {
+    all: unset;
+}
