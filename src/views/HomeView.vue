@@ -192,7 +192,7 @@ onUnmounted(() => {
     <div
       id="keyboard"
       @click.stop="handleKeyboardClick($event)"
-      class="max-w-[484px] mt-10 2xl:mt-24 mx-auto"
+      class="max-w-[484px] mt-10 2xl:mt-24 mx-auto scale-[0.6] sm:scale-100"
     >
       <div v-for="row in game.letters" :key="row" class="flex justify-center">
         <div class="row flex gap-2 mb-2">
@@ -202,7 +202,7 @@ onUnmounted(() => {
             class="key-wrapper text-xl font-semibold rounded bg-[#818384] text-[#f8f8f8] flex-1"
           >
             <button
-              class="key px-2 sm:px-4 h-8 sm:h-14 rounded flex items-center justify-center cursor-pointer"
+              class="key px-4 h-14 rounded flex items-center justify-center cursor-pointer"
               v-if="key === 'Backspace'"
               data-key="Backspace"
             >
@@ -215,7 +215,7 @@ onUnmounted(() => {
 
             <button
               v-else
-              class="key px-2 sm:px-4 h-8 sm:h-14 flex rounded items-center justify-center cursor-pointer"
+              class="key px-4 flex rounded items-center justify-center h-14 cursor-pointer"
               :class="matchingTileForKey(key)?.status"
               type="button"
               :data-key="key"
