@@ -1,46 +1,67 @@
-# Wordle
+# Wordle Game in Vue 3
 
-This template should help get you started developing with Vue 3 in Vite.
+Welcome to Wordle Game, a Vue 3 implementation of the popular word puzzle game! The game challenges players to guess a secret five-letter word within a limited number of attempts. Each guess provides feedback to help players narrow down the correct word.
 
-## Recommended IDE Setup
+This project is built with Vue 3 and utilizes a large dataset of English words to ensure a diverse and challenging gameplay experience.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features
 
-## Type Support for `.vue` Imports in TS
+- Dynamic Gameplay: Guess the secret five-letter word within six attempts.
+- Visual Feedback: Colored tiles indicate correct, present, or absent letters after each guess.
+- Interactive Keyboard: Use the on-screen keyboard or your physical keyboard to input guesses.
+- Responsive Design: Optimized for both desktop and mobile devices.
+- Extensive Word List: The game uses a comprehensive list of 370,000+ English words sourced from the [dwyl/english-words](https://github.com/dwyl/english-words) repository.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## How to Play
 
-## Customize configuration
+1. Start the Game: The game will randomly choose a five-letter word from the word list.
+2. Make a Guess: Use the on-screen keyboard or your own to type in your guesses.
+3. Tile Colors Guide:
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- Green: The letter is in the correct position.
+- Yellow: The letter is in the word but in the wrong position.
+- Gray: The letter is not in the word at all.
 
-## Project Setup
+4. Win or Lose: You have six attempts to guess the correct word. If you guess correctly, you win! If you fail to guess within six tries, the correct word will be revealed.
+
+## Installation
+
+### Prerequisites
+
+- Node.js: Make sure you have Node.js installed.
+
+### Steps to Install
+
+1. Clone the Repository:
+
+```sh
+git clone https://github.com/yourusername/wordle-game-vue3.git
+```
+
+2. Navigate to the Project Directory:
+
+```sh
+cd wordle-game-vue3
+```
+
+3. Navigate to the Project Directory:
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+4. Navigate to the Project Directory:
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+Your application should now be running on http://localhost:3000.
 
-```sh
-npm run build
-```
+## Word List Source
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+The word list used in this project comes from the excellent [dwyl/english-words](https://github.com/dwyl/english-words) repository, which provides over 370,000 English words. For this Wordle game, we specifically use five-letter words from this dataset to ensure an engaging and diverse gameplay experience.
 
-```sh
-npm run test:unit
-```
+## Contributing
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
-# wordle
+Contributions are welcome! If you have suggestions for improvements or new features, feel free to submit an issue or create a pull request.
