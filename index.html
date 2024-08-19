@@ -1,12 +1,56 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <title>Wordle</title>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>wordle</title>
+    <meta
+      name="description"
+      content="Wordle Game in Vue 3 - a Vue 3 implementation of the popular word puzzle game! The game challenges players to guess a secret five-letter word within a limited number of attempts. Each guess provides feedback to help players narrow down the correct word."
+    />
+    <meta
+      name="keywords"
+      content="Vue 3, Vue.js, word play, English"
+    />
+    <meta name="author" content="Pujan Chapagain" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://poojanchapagain.com.np/" />
+    <meta property="og:title" content="Wordle Game in Vue 3" />
+    <meta
+      property="og:description"
+      content="Wordle Game in Vue 3 - a Vue 3 implementation of the popular word puzzle game! The game challenges players to guess a secret five-letter word within a limited number of attempts. Each guess provides feedback to help players narrow down the correct word."
+    />
+    <meta property="og:image" content="https://wordle.poojanchapagain.com.np/images/og.jpg" />
+    <meta property="linkedin:creator" content="https://www.linkedin.com/in/pujanchapagain7" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" href="/favicon.ico" />
+    <script>
+      ;(function (w, d, s, l, i) {
+        w[l] = w[l] || []
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : ''
+        j.async = true
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+        f.parentNode.insertBefore(j, f)
+      })(window, document, 'script', 'dataLayer', 'GTM-MP649KC9')
+    </script>
   </head>
   <body>
+    <noscript
+    ><iframe
+      src="https://www.googletagmanager.com/ns.html?id=GTM-MP649KC9"
+      height="0"
+      width="0"
+      style="display: none; visibility: hidden"
+    ></iframe
+  ></noscript>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
