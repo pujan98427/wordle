@@ -14,13 +14,10 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "pinia": "^2.1.7",
     "vue": "^3.4.29",
-    "vue-router": "^4.3.3",
-    "word-list": "^4.0.0"
+    "vue-router": "^4.3.3"
   },
   "devDependencies": {
-    "@mertasan/tailwindcss-variables": "^2.6.1",
     "@rushstack/eslint-patch": "^1.8.0",
     "@tsconfig/node20": "^20.1.4",
     "@types/jsdom": "^21.1.7",

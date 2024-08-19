@@ -2,11 +2,6 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import wordList from '@/data/words_dictionary.json'
 
-// Create a Set of five-letter words to optimize the lookup
-const validWordsSet = new Set(
-  wordList.filter((word) => word.length === 5).map((word) => word.toLowerCase())
-)
-
 const game = ref({
   guessesAllowed: 6,
   wordLength: 5,
@@ -19,8 +14,14 @@ const game = ref({
     ['Enter', ...'ZXCVBNM'.split(''), 'Backspace']
   ],
   message: '',
+  validWord: false,
   errors: false
 })
+
+// Create a Set of five-letter words to optimize the lookup
+const validWordsSet = new Set(wordList.map((word) => word.toLowerCase()))
+const validWordsArray = Array.from(validWordsSet)
+console.log(validWordsArray)
 
 // Initialize the game board
 const initBoard = () => {
@@ -90,17 +91,21 @@ const submitGuess = () => {
     .map((tile) => tile.letter)
     .join('')
     .toLowerCase()
-  console.log('currentGuess:', currentGuess)
 
   if (currentGuess.length < game.value.wordLength) {
     game.value.message = 'Guess is too short!'
     return
   }
 
-  // Ensure that the guess is checked against the lowercase validWordsSet
   if (!validWordsSet.has(currentGuess)) {
     game.value.message = 'Invalid word...'
+    game.value.errors = true
+    setTimeout(() => {
+      game.value.errors = false
+    }, 3000)
     return
+  } else {
+    game.value.validWord = true
   }
 
   updateTileStatus(currentRow, currentGuess)
@@ -153,25 +158,33 @@ onUnmounted(() => {
     <div id="game-wrap">
       <div id="game" class="grid grid-cols-1 gap-1.5 max-w-[344px] mx-auto">
         <!-- Game board rendering rows and tiles -->
+
         <div
           v-for="(row, rowIndex) in game.board"
           :key="rowIndex"
           class="row grid grid-cols-5 gap-1.5"
           :class="{
             current: game.currentRowIndex === rowIndex,
-            invalid: game.currentRowIndex === rowIndex && game.errors
+            invalid,
+            animate__shakeX: game.currentRowIndex === rowIndex && game.errors
           }"
         >
           <div
-            v-for="tile in row"
+            v-for="(tile, index) in row"
             :key="tile.letter"
             class="tile text-4xl font-bold leading-[1] uppercase w-[62px] h-[62px] flex items-center justify-center border-2 border-[#565758]"
-            :class="tile.status"
+            :class="[
+              game.currentRowIndex - 1 === rowIndex && game.validWord ? 'animate__flipInX' : '',
+              tile.status
+            ]"
+            :style="{ 'animation-delay': index + '00ms' }"
           >
             {{ tile.letter }}
           </div>
         </div>
-        <output>{{ game.message }}</output>
+        <output v-if="game.errors" :class="game.errors ? 'animate__flipInX' : ''">{{
+          game.message
+        }}</output>
       </div>
     </div>
 
@@ -186,10 +199,10 @@ onUnmounted(() => {
           <div
             v-for="key in row"
             :key="key"
-            class="text-xl font-semibold rounded bg-[#818384] text-[#f8f8f8] flex-1"
+            class="key-wrapper text-xl font-semibold rounded bg-[#818384] text-[#f8f8f8] flex-1"
           >
             <button
-              class="key px-4 h-14 flex items-center justify-center cursor-pointer"
+              class="key px-4 h-14 rounded flex items-center justify-center cursor-pointer"
               v-if="key === 'Backspace'"
               data-key="Backspace"
             >
@@ -202,7 +215,7 @@ onUnmounted(() => {
 
             <button
               v-else
-              class="key px-4 flex items-center justify-center h-14 cursor-pointer"
+              class="key px-4 flex rounded items-center justify-center h-14 cursor-pointer"
               :class="matchingTileForKey(key)?.status"
               type="button"
               :data-key="key"
