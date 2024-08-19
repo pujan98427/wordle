@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import wordList from 'word-list'
+import wordList from '@/data/words_dictionary.json'
+
+// Create a Set of five-letter words to optimize the lookup
+const validWordsSet = new Set(
+  wordList.filter((word) => word.length === 5).map((word) => word.toLowerCase())
+)
 
 const game = ref({
   guessesAllowed: 6,
@@ -17,18 +22,18 @@ const game = ref({
   errors: false
 })
 
-const validWords = wordList.filter((word) => word.length === 5)
-console.log(validWords)
-
-// Initialize the board
+// Initialize the game board
 const initBoard = () => {
-  game.value.theWord = validWords[Math.floor(Math.random() * validWords.length)]
+  game.value.theWord =
+    Array.from(validWordsSet)[Math.floor(Math.random() * validWordsSet.size)].toUpperCase()
+  console.log('game.value.theWord:', game.value.theWord)
+
   game.value.board = Array.from({ length: game.value.guessesAllowed }, () => {
     return Array.from({ length: game.value.wordLength }, () => ({ letter: '', status: '' }))
   })
 }
 
-// Function to find the matching tile for a key
+// Match tiles for keyboard clicks
 const matchingTileForKey = (key) => {
   for (const row of game.value.board) {
     for (const tile of row) {
@@ -52,7 +57,7 @@ const handleKeyPress = (event) => {
   }
 }
 
-// Handle keyboard click
+// Handle keyboard click event
 const handleKeyboardClick = (event) => {
   const key = event.target.dataset.key?.toUpperCase()
   if (key) {
@@ -60,7 +65,7 @@ const handleKeyboardClick = (event) => {
   }
 }
 
-// Fill the tile
+// Fill the tile with the key pressed
 const fillTile = (key) => {
   const currentRow = game.value.board[game.value.currentRowIndex]
   const emptyTile = currentRow.find((tile) => !tile.letter)
@@ -69,7 +74,7 @@ const fillTile = (key) => {
   }
 }
 
-// Remove the last letter from the current row
+// Empty the last filled tile
 const emptyTile = () => {
   const currentRow = game.value.board[game.value.currentRowIndex]
   const filledTile = [...currentRow].reverse().find((tile) => tile.letter)
@@ -78,24 +83,29 @@ const emptyTile = () => {
   }
 }
 
-// Submit the guess
+// Submit the current guess
 const submitGuess = () => {
   const currentRow = game.value.board[game.value.currentRowIndex]
-  const currentGuess = currentRow.map((tile) => tile.letter).join('')
+  const currentGuess = currentRow
+    .map((tile) => tile.letter)
+    .join('')
+    .toLowerCase()
+  console.log('currentGuess:', currentGuess)
 
   if (currentGuess.length < game.value.wordLength) {
     game.value.message = 'Guess is too short!'
     return
   }
 
-  if (!validWords.includes(currentGuess)) {
+  // Ensure that the guess is checked against the lowercase validWordsSet
+  if (!validWordsSet.has(currentGuess)) {
     game.value.message = 'Invalid word...'
     return
   }
 
   updateTileStatus(currentRow, currentGuess)
 
-  if (currentGuess === game.value.theWord) {
+  if (currentGuess.toUpperCase() === game.value.theWord) {
     game.value.message = 'You Win!'
   } else if (game.value.currentRowIndex === game.value.guessesAllowed - 1) {
     game.value.message = `Game Over. The word was: ${game.value.theWord}`
@@ -104,7 +114,7 @@ const submitGuess = () => {
   }
 }
 
-// Update the tile status
+// Update tile status based on guess
 const updateTileStatus = (row, guess) => {
   const wordArray = game.value.theWord.split('')
   row.forEach((tile, index) => {
@@ -118,7 +128,7 @@ const updateTileStatus = (row, guess) => {
   })
 }
 
-// Mount and cleanup
+// Lifecycle hooks
 onMounted(() => {
   initBoard()
   window.addEventListener('keydown', handleKeyPress)
